@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="hikariConfig"
+          class="com.zaxxer.hikari.HikariConfig"
+          destroy-method="close"
+          p:driverClassName="${db.driver}"
+          p:url="${db.url}"
+          p:username="${db.username}"
+          p:password="${dp.password}"
+          p:initialSize="${db.init.pool.size}"
+          p:maxTotal="${db.max.pool.size}"/>
+
+    <bean id="customer"
+        class="by.itacademy.javaenterprise.kotkovski.dao.impl.CustomerDAOImpl">
+        <property name="dataSource" ref="hikariConfig"/>
+    </bean>
+    <bean id="car"
+          class="by.itacademy.javaenterprise.kotkovski.dao.impl.CarDAOImpl">
+        <property name="dataSource" ref="hikariConfig"/>
+    </bean>
+
+</beans>
